@@ -15,7 +15,7 @@ namespace Pulse.Core
 
         public char this[short code]
         {
-            get { return TryGetChar(code) ?? 'Ⅷ'; }
+            get { return TryGetChar(code) ?? ' '; }
         }
 
         public short this[char ch]

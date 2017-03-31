@@ -21,9 +21,11 @@ namespace Pulse.Core
             return ValueToIndex(value >> 8, value & 0xFF);
         }
 
-        public static int ValueToIndex(int hight, int low)
+        public static int ValueToIndex(int height, int low)
         {
-            return ValueToIndexDic[(hight << 8) | low];
+            int height1 = height << 8;
+            int stupidvalue = height1 | low;
+            return ValueToIndexDic[stupidvalue];
         }
 
         public static void IndexToValue(int index, out int hight, out int low)
@@ -64,7 +66,6 @@ namespace Pulse.Core
             {
                 {0x851C, 0x5C}, // _it
                 {0x859F, 0xC0},
-
                 {0x8140, 0x100},
                 {0x8141, 0x101},
                 {0x8142, 0x102},
@@ -72,12 +73,16 @@ namespace Pulse.Core
                 {0x8146, 0x106},
                 {0x8148, 0x108},
                 {0x8149, 0x109},
+                {0x814B, 0x10B},
                 {0x8151, 0x111},
+                {0x8158, 0x119},
                 {0x815B, 0x11B},
                 {0x815C, 0x11C},
                 {0x815E, 0x11E},
                 {0x8160, 0x120},
                 {0x8163, 0x123},
+                {0x8167, 0x127},
+                {0x8168, 0x128},
                 {0x8169, 0x129},
                 {0x816A, 0x12A},
                 {0x8173, 0x133},
@@ -101,14 +106,24 @@ namespace Pulse.Core
                 {0x8199, 0x158}, // 13-3
                 {0x819A, 0x159},
                 {0x819B, 0x15A},
+                {0x819D, 0x15C},
                 {0x81A0, 0x15F},
+                {0x81A1, 0x160},
                 {0x81A2, 0x161},
+                {0x81A3, 0x162},
+                {0x81A4, 0x163},
+                {0x81A5, 0x164},
                 {0x81A6, 0x165},
+                {0x81A7, 0x166},
                 {0x81A8, 0x167},
                 {0x81A9, 0x168},
                 {0x81AA, 0x169},
                 {0x81AB, 0x16A},
+                {0x81AC, 0x16B},
+                {0x81AD, 0x16C},
+                {0x81AE, 0x16D},
                 {0x81F4, 0x1B3}
+                
             };
 
             // High ANSI

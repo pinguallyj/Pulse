@@ -29,19 +29,39 @@ namespace Pulse.Core
 
         public int Write(char[] chars, ref int offset)
         {
-            StringBuilder sb = new StringBuilder(MaxTagLength);
+            /*StringBuilder sb = new StringBuilder(MaxTagLength);
+
             sb.Append('{');
             if (EnumCache<FFXIIITextTagCode>.IsDefined(Code))
                 sb.Append(Code);
+
             else
                 sb.Append("Var").AppendFormat(((byte)Code).ToString("X2"));
+      
             if (Param != null)
             {
                 sb.Append(' ');
                 sb.Append(Param);
             }
             sb.Append('}');
+            */
+            StringBuilder sb = new StringBuilder(MaxTagLength);
 
+            byte[] coode = { (byte)Code, Convert.ToByte(Param) };
+            sb.Append(Encoding.GetEncoding(932).GetChars(coode));
+            /*   sb.Append('{');
+               if (EnumCache<FFXIIITextTagCode>.IsDefined(Code))
+                   sb.Append(Code);
+               else
+                    sb.Append("Var").AppendFormat(((byte)Code).ToString("X2"));
+
+               if (Param != null)
+               {
+                   sb.Append(' ');
+                   sb.Append(Param);
+               }
+               sb.Append('}'); */
+     
             if (sb.Length > MaxTagLength)
                 throw Exceptions.CreateException(Lang.Error.Text.TooLongTagNameFormat, sb.ToString());
 
@@ -225,18 +245,21 @@ namespace Pulse.Core
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder(MaxTagLength);
-            sb.Append('{');
+
+            byte[] coode = { (byte)Code, Convert.ToByte(Param) };
+            sb.Append(Encoding.GetEncoding(932).GetChars(coode));
+         /*   sb.Append('{');
             if (EnumCache<FFXIIITextTagCode>.IsDefined(Code))
                 sb.Append(Code);
             else
-                sb.Append("Var").AppendFormat(((byte)Code).ToString("X2"));
+                 sb.Append("Var").AppendFormat(((byte)Code).ToString("X2"));
 
             if (Param != null)
             {
                 sb.Append(' ');
                 sb.Append(Param);
             }
-            sb.Append('}');
+            sb.Append('}'); */
             return sb.ToString();
         }
     }

@@ -16,6 +16,12 @@ namespace Pulse.Core
             return new FFXIIITextEncoding(codepage);
         }
 
+        public static FFXIIITextEncoding CreateJpn()
+        {
+            FFXIIICodePage codepage = FFXIIICodePageHelper.CreateJpn();
+            return new FFXIIITextEncoding(codepage);
+        }
+
         public static readonly Lazy<FFXIIITextEncoding> DefaultEuroEncoding = new Lazy<FFXIIITextEncoding>(CreateEuro);
     }
 }

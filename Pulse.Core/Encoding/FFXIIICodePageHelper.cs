@@ -16,6 +16,11 @@ namespace Pulse.Core
             return Create(Encoding.GetEncoding(1251));
         }
 
+        public static FFXIIICodePage CreateJpn()
+        {
+            return Create(Encoding.GetEncoding(932));
+        }
+
         public static unsafe FFXIIICodePage Create(Encoding encoding)
         {
             byte[] buff = new byte[256];
