@@ -13,7 +13,7 @@ namespace Pulse.FS.ZTR
 
         public static void readJapaneseZTR()
         {
-            String[] allfiles = System.IO.Directory.GetFiles(@"C:\LR\jp", "*_jp.ztr*", System.IO.SearchOption.AllDirectories);
+            String[] allfiles = System.IO.Directory.GetFiles(@"C:\LR\txtres\event\ev_edaa_200", "*_jp.ztr", System.IO.SearchOption.AllDirectories);
             foreach (var file in allfiles)
             {
                 Stream fs = File.OpenRead(file);
@@ -41,7 +41,7 @@ namespace Pulse.FS.ZTR
 
         public static void readEnglishZTR()
         {
-            String[] allfiles = System.IO.Directory.GetFiles(@"C:\LR\HRW", "*_us.ztr*", System.IO.SearchOption.AllDirectories);
+            String[] allfiles = System.IO.Directory.GetFiles(@"C:\LR\HRW", "*_us.ztr", System.IO.SearchOption.AllDirectories);
             foreach (var file in allfiles)
             {
                 Stream fs = File.OpenRead(file);
@@ -67,16 +67,21 @@ namespace Pulse.FS.ZTR
             }
         }
 
-        public static string Convert(byte[] data)
+        public static string Convert(byte[] bytes)
         {
-            char[] characters = data.Select(b => (char)b).ToArray();
-            return new string(characters);
+            string response = string.Empty;
+
+            foreach (byte b in bytes)
+                response = response + (Char)b;
+
+            return response;
         }
 
         public static void writetoZTR()
         {
-            String[] allfiles = System.IO.Directory.GetFiles(@"C:\LR\HRWTL", "*.txt*", System.IO.SearchOption.AllDirectories);
+            String[] allfiles = System.IO.Directory.GetFiles(@"C:\LR\ysn\", "*.txt", System.IO.SearchOption.AllDirectories);
             foreach (var file in allfiles)
+                
             {
                 int counter = 0;
                 string line;
@@ -95,9 +100,18 @@ namespace Pulse.FS.ZTR
                     {
                         if (splitstring[1].Contains("%")) {
                             string[] deconstructedstring = splitstring[1].Split(new[] { "%" }, StringSplitOptions.None);
-                            byte[] charsepbytes = new byte[] { 0, 0, 1, 0 };
-                            string characterseparator = Convert(charsepbytes);
-                            lineentry.Value = deconstructedstring[0] + characterseparator + deconstructedstring[1];
+                            //byte[] charsepbytes = new byte[] { 0, 0, 1, 0 };
+                            //string characterseparator = Convert(charsepbytes);
+                            char charzero = '*';
+                            char charone = '&';
+                            string characterseparator = "";
+                            StringBuilder builder = new StringBuilder(characterseparator);
+                            builder.Append(charzero);
+                            builder.Append(charone);
+                            
+
+                            System.Diagnostics.Debug.WriteLine(builder.ToString());
+                            lineentry.Value = deconstructedstring[0] + builder.ToString() + deconstructedstring[1];
 
 
                         }
@@ -118,7 +132,7 @@ namespace Pulse.FS.ZTR
 
                 FFXIIITextEncoding encoding = FFXIIITextEncodingFactory.CreateEuro();
                 
-                String outputfile = @"C:\LR\HRWTL\test.ztr";
+                String outputfile = @"C:\LR\ysn\" + Path.GetFileName(file) + ".ztr";
                 using (FileStream fs2 = File.OpenWrite(outputfile))
                 {
                     ZtrFilePacker packer = new ZtrFilePacker(fs2, encoding, ZtrFileType.BigEndianCompressedDictionary);
@@ -137,8 +151,8 @@ namespace Pulse.FS.ZTR
         public static void Main(string[] args)
         {
             //readJapaneseZTR();
-            //writetoZTR();
-            readEnglishZTR();
+            writetoZTR();
+            //readEnglishZTR();
         }
 
     }
